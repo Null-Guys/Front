@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import Chart from 'react-apexcharts';
+import Chart from 'react-apexcharts'; // React용 ApexCharts
+import ApexCharts from 'apexcharts'; // ApexCharts 핵심 라이브러리
 
 const LineChartOptions = {
   chart: {
@@ -26,7 +26,7 @@ const LineChartOptions = {
     style: {
       // fontFamily: 'Pretendard, sans-serif', // 타이틀 폰트
       fontSize: '25px', // 타이틀 텍스트 크기
-      color: '#000', // 타이틀 텍스트 색상
+      color: '#333333', // 타이틀 텍스트 색상
     },
   },
   dataLabels: {
@@ -86,6 +86,29 @@ const LineChartOptions = {
     '#33B2DF',
     '#D4526E',
   ],
+  // 반응형 디자인 옵션
+  // responsive: [
+  //   {
+  //     breakpoint: 99999,
+  //     options: {
+  //       chart: { width: '100%' }, // 차트 너비 100%로 설정
+  //     },
+  //   },
+  //   {
+  //     breakpoint: 768, // 📌 768px 이하일 때
+  //     options: {
+  //       chart: { width: '100%' }, // 차트 너비 100%로 설정
+  //       legend: { position: 'bottom' }, // 범례를 아래쪽으로 이동
+  //     },
+  //   },
+  //   {
+  //     breakpoint: 480, // 📌 480px 이하일 때
+  //     options: {
+  //       chart: { width: 300 }, // 고정 너비로 변경
+  //       legend: { show: false }, // 범례 숨김
+  //     },
+  //   },
+  // ],
 };
 
 const LineChartData = [
@@ -127,13 +150,13 @@ const LineChartData = [
   },
 ];
 
-export default function LineChart() {
+export default function LineChart({ chartWidth }) {
   return (
     <Chart
       type="line" // 차트 유형 지정
       options={LineChartOptions} // 차트 옵션 적용
       series={LineChartData} // 차트 데이터 적용
-      // width={500} // 차트 너비 설정
+      width={chartWidth} // 차트 너비 설정
       // height={400} // 차트 높이 설정
     />
   );
