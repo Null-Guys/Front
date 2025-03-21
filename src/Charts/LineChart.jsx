@@ -1,5 +1,7 @@
-// 차트 옵션 설정
-export const LineChartOptions = {
+import { useState, useEffect } from 'react';
+import Chart from 'react-apexcharts';
+
+const LineChartOptions = {
   chart: {
     type: 'line', // 차트 유형을 라인 차트로 설정
     fontFamily: 'Pretendard, sans-serif', // 차트 폰트
@@ -36,7 +38,7 @@ export const LineChartOptions = {
     curve: 'smooth', // 곡선형 라인 적용
   },
   xaxis: {
-    // tickAmount: 10, // X축에 표시될 틱의 수
+    tickAmount: 10, // X축에 표시될 틱의 수
     labels: {
       show: true, // 라벨 표시 여부
       rotate: 0, // 라벨 회전 각도
@@ -85,3 +87,54 @@ export const LineChartOptions = {
     '#D4526E',
   ],
 };
+
+const LineChartData = [
+  {
+    name: 'data A',
+    data: [
+      { x: 1, y: 0.6 },
+      { x: 2, y: 7.9 },
+      { x: 9, y: 21.7 },
+      { x: 10, y: 16.5 },
+    ],
+  },
+  {
+    name: 'data B',
+    data: [
+      { x: 1, y: 8.1 },
+      { x: 2, y: 6.3 },
+      { x: 9, y: 25.7 },
+      { x: 10, y: 15.2 },
+    ],
+  },
+  {
+    name: 'data C',
+    data: [
+      { x: 1, y: 4.8 },
+      { x: 2, y: 3.2 },
+      { x: 9, y: 12.8 },
+      { x: 10, y: 7.6 },
+    ],
+  },
+  {
+    name: 'data D',
+    data: [
+      { x: 1, y: 5.7 },
+      { x: 2, y: 9.9 },
+      { x: 9, y: 22.9 },
+      { x: 10, y: 11.4 },
+    ],
+  },
+];
+
+export default function LineChart() {
+  return (
+    <Chart
+      type="line" // 차트 유형 지정
+      options={LineChartOptions} // 차트 옵션 적용
+      series={LineChartData} // 차트 데이터 적용
+      // width={500} // 차트 너비 설정
+      // height={400} // 차트 높이 설정
+    />
+  );
+}

@@ -23,13 +23,11 @@ export default [
     rules: {
       ...js.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
-      // 'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
-      'no-unused-vars': ['warn'],
+      'no-unused-vars': ['warn', { varsIgnorePattern: '^[A-Z_]' }], // varsIgnorePattern 붙이니까 사용 중인데 사용 중이지 않다는 경고 없어짐
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },
       ],
     },
-    extends: ['plugin:react/recommended'], // 이거 하니까 사용 중인데 사용 중이지 않다는 경고 없어짐
   },
 ];
