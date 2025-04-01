@@ -3,7 +3,9 @@ import Chart from 'react-apexcharts';
 // import ApexCharts from 'apexcharts';
 import LineChart from './Charts/LineChart';
 import BasicColumnChart from './Charts/BasicColumnChart';
+import PieChart from './Charts/PieChart';
 import styled from 'styled-components';
+import chartCursor from '/chartCursor.png';
 
 export default function Test() {
   const wrapperRef = useRef(null);
@@ -14,7 +16,7 @@ export default function Test() {
     const updateChartWidth = () => {
       // console.log(wrapperRef.current.offsetWidth); // Wrapper의 너비 출력
       if (wrapperRef.current) {
-        setChartWidth(wrapperRef.current.offsetWidth - 500);
+        setChartWidth(wrapperRef.current.offsetWidth * 0.5);
       }
     };
 
@@ -36,15 +38,41 @@ export default function Test() {
 
   return (
     <ChartWrapper ref={wrapperRef}>
-      <LineChart chartWidth={chartWidth} />
-      <BasicColumnChart chartWidth={chartWidth} />
+      <Wrapper>
+        <LineChart chartWidth={chartWidth} />
+        <BasicColumnChart chartWidth={chartWidth} />
+      </Wrapper>
+      <Wrapper>
+        <PieChart chartWidth={chartWidth} />
+      </Wrapper>
     </ChartWrapper>
   );
 }
 
 const ChartWrapper = styled.div`
-  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 80vw;
+  margin: 12vh 0 12vh 0;
+
+  /* .apexcharts-canvas {
+    cursor: url('/chartCursor.png');
+  } */
+  // TODO: 커서 색상 바꾸기
+  .apexcharts-svg.apexcharts-zoomable.hovering-zoom {
+    cursor: url('/chartCursor.png');
+  }
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 40px;
+
+  // > * 모든 직계 자손 선택
+  > * {
+    flex: 1;
+  }
 `;
