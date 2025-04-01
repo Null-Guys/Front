@@ -7,8 +7,19 @@ export default function PieChart({ chartWidth }) {
     series: [44, 55, 13, 33],
     options: {
       chart: {
-        width: 380,
+        height: 450,
         type: 'donut',
+        fontFamily: 'Pretendard, sans-serif',
+      },
+      title: {
+        text: 'Pie Chart', // 차트 타이틀 텍스트
+        align: 'center', // 가운데 정렬
+        margin: 50,
+        style: {
+          fontSize: '20px',
+          color: '#333333',
+          fontWeight: 'bold',
+        },
       },
       dataLabels: {
         enabled: false,
@@ -28,7 +39,7 @@ export default function PieChart({ chartWidth }) {
       ],
       legend: {
         position: 'right',
-        offsetY: 0,
+        offsetY: 100, // ✅ 높이 중앙에 위치하도록 수동 조절
         height: 230,
       },
     },
@@ -82,6 +93,7 @@ export default function PieChart({ chartWidth }) {
               series={content.series}
               type="donut"
               width={chartWidth}
+              height={450}
             />
           </div>
         </div>
@@ -100,5 +112,10 @@ export default function PieChart({ chartWidth }) {
 
 const ButtonWrapper = styled.div`
   display: flex;
+  font-family: 'Pretendard, sans-serif';
+
+  button {
+    color: #333333;
+  }
   /* justify-content: center; */
 `;

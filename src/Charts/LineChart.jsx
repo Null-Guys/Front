@@ -24,9 +24,9 @@ const LineChartOptions = {
     margin: 5, // 타이틀과 차트 간의 여백
     offsetY: 0, // Y축 기준으로 타이틀 위치 조정
     style: {
-      // fontFamily: 'Pretendard, sans-serif', // 타이틀 폰트
       fontSize: '25px', // 타이틀 텍스트 크기
       color: '#333333', // 타이틀 텍스트 색상
+      fontWeight: 'bold',
     },
   },
   dataLabels: {

@@ -4,6 +4,7 @@ import Chart from 'react-apexcharts';
 import LineChart from './Charts/LineChart';
 import BasicColumnChart from './Charts/BasicColumnChart';
 import PieChart from './Charts/PieChart';
+import HeatMap from './Charts/HeatMap';
 import styled from 'styled-components';
 import chartCursor from '/chartCursor.png';
 
@@ -44,6 +45,7 @@ export default function Test() {
       </Wrapper>
       <Wrapper>
         <PieChart chartWidth={chartWidth} />
+        <HeatMap chartWidth={chartWidth} />
       </Wrapper>
     </ChartWrapper>
   );
