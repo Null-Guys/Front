@@ -68,7 +68,7 @@ export default function DashboardTopStats() {
         title="실시간 센서 상태"
         value="98.5%"
         subtitle="정상 가동중"
-        valueColor="#22c55e"
+        $valueColor="#22c55e"
         icon={<CheckCircle size={20} color="#fff" />}
         iconColor="#22c55e" // 초록색
       />
@@ -83,7 +83,7 @@ export default function DashboardTopStats() {
         title="이상 감지 건수"
         value="12"
         subtitle="오늘"
-        valueColor="#ef4444"
+        $valueColor="#ef4444"
         icon={<AlertTriangle size={20} color="#fff" />}
         iconColor="#ef4444" // 빨강
       />

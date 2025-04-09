@@ -1,5 +1,7 @@
-import SensorStats from './SensorStats';
 import styled from 'styled-components';
+import SensorStats from './SensorStats';
+import LineChart from '../Charts/LineChart';
+import Scatter from '../Charts/Scatter';
 
 export default function DashBoard() {
   return (
@@ -7,6 +9,10 @@ export default function DashBoard() {
       <StatsWrapper>
         <SensorStats />
       </StatsWrapper>
+      <ChartWrapper>
+        <LineChart style={{ flex: '1' }} />
+        <Scatter style={{ flex: '1' }} />
+      </ChartWrapper>
     </DashBoardWrapper>
   );
 }
@@ -19,4 +25,9 @@ const DashBoardWrapper = styled.div`
 
 const StatsWrapper = styled.div`
   display: flex;
+`;
+
+const ChartWrapper = styled.div`
+  display: flex;
+  margin-top: 28px;
 `;
