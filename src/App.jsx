@@ -1,14 +1,12 @@
 import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
+import DashBoard from './DashBoard.jsx/DashBoard';
 import './App.css';
-import Test from './Test';
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
+      <DashBoard />
+      {/* <Test /> */}
       {/* <div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -22,7 +20,6 @@ function App() {
           count is {count}
         </button>
       </div> */}
-      <Test />
     </>
   );
 }
