@@ -3,25 +3,13 @@ import ReactApexChart from 'react-apexcharts';
 
 export default function HeatMap({ chartWidth }) {
   const data = [
+    // {
+    //   name: '정상',
+    //   data: [90, 80, 70, 60, 50, 40, 30],
+    // },
     {
-      name: 'Team A',
-      data: [90, 80, 70, 60, 50, 40, 30, 20],
-    },
-    {
-      name: 'Team B',
-      data: [20, 30, 40, 50, 60, 70, 80, 90],
-    },
-    {
-      name: 'Team C',
-      data: [10, 20, 30, 40, 50, 60, 70, 80],
-    },
-    {
-      name: 'Team D',
-      data: [80, 70, 60, 50, 40, 30, 20, 10],
-    },
-    {
-      name: 'Team E',
-      data: [15, 25, 35, 45, 55, 65, 75, 85],
+      name: '고장',
+      data: [20, 30, 40, 50, 60, 70, 80],
     },
   ];
 
@@ -42,14 +30,13 @@ export default function HeatMap({ chartWidth }) {
       xaxis: {
         type: 'category',
         categories: [
-          '10:00',
-          '10:30',
-          '11:00',
-          '11:30',
-          '12:00',
-          '12:30',
-          '01:00',
-          '01:30',
+          '모델명1',
+          '모델명2',
+          '모델명3',
+          '모델명4',
+          '모델명5',
+          '모델명6',
+          '모델명7',
         ],
       },
       title: {
@@ -76,6 +63,8 @@ export default function HeatMap({ chartWidth }) {
           options={content.options}
           series={content.series}
           type="heatmap"
+          width={600} // TODO: 고치기
+          // width={chartWidth}
           height={450}
         />
       </div>
