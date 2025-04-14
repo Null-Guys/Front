@@ -44,7 +44,6 @@ export default function DashBoard() {
         <SensorStats />
       </StatsWrapper>
       <ChartWrapper>
-        {/* TODO: 그래프 두개 높이 맞추기, 제목 달기 */}
         <Card id="card">
           <LifePredictionChart chartWidth={chartWidth} chartHeight={chartHeight} />
         </Card>
