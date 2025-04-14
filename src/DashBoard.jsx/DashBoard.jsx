@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import styled from 'styled-components';
-import SensorStats from './SensorStats';
+import SensorStats from './Components/SensorStats';
 import LifePredictionChart from '../Charts/LifePredictionChart';
 import FailurePredictionChart from '../Charts/FailurePredictionChart';
+import CollapsibleTable from './Components/DataTable';
 
 export default function DashBoard() {
   const wrapperRef = useRef(null);
@@ -51,6 +52,7 @@ export default function DashBoard() {
           <FailurePredictionChart chartWidth={chartWidth} chartHeight={chartHeight} />
         </Card>
       </ChartWrapper>
+      <CollapsibleTable />
     </DashBoardWrapper>
   );
 }
@@ -67,7 +69,7 @@ const StatsWrapper = styled.div`
 
 const ChartWrapper = styled.div`
   display: flex;
-  margin-top: 28px;
+  margin: 28px 0;
   width: 80vw;
   gap: 20px;
 `;
