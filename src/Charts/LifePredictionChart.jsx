@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import Chart from 'react-apexcharts';
 
-function BasicColumnChart({ chartWidth }) {
+function LifePredictionChart({ chartWidth }) {
   const BasicColumnOptions = {
     chart: {
       type: 'bar',
       fontFamily: 'Pretendard, sans-serif',
+    },
+    title: {
+      text: '센서별 수명 예측',
+      align: 'left',
+      style: {
+        fontSize: '16px',
+        color: '#333333',
+        fontWeight: 'bold',
+      },
     },
     plotOptions: {
       bar: {
@@ -25,20 +34,28 @@ function BasicColumnChart({ chartWidth }) {
     },
     xaxis: {
       categories: [
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
+        '모델명1',
+        '모델명2',
+        '모델명3',
+        '모델명4',
+        '모델명5',
+        '모델명6',
+        '모델명7',
       ],
+      labels: {
+        style: {
+          fontSize: '14px',
+          color: '#333333',
+        },
+      },
     },
     yaxis: {
       title: {
-        text: '$ (thousands)',
+        text: '남은 수명(일)',
+        style: {
+          fontSize: '14px',
+          color: '#333333',
+        },
       },
     },
     fill: {
@@ -46,23 +63,15 @@ function BasicColumnChart({ chartWidth }) {
     },
     tooltip: {
       y: {
-        formatter: (val) => `$ ${val} thousands`,
+        formatter: (val) => `$ ${val}일`,
       },
     },
   };
 
   const BasicColumnData = [
     {
-      name: 'Net Profit',
-      data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
-    },
-    {
-      name: 'Revenue',
-      data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
-    },
-    {
-      name: 'Free Cash Flow',
-      data: [35, 41, 36, 26, 45, 48, 52, 53, 41],
+      name: '남은 수명',
+      data: [44, 55, 57, 56, 61, 20, 30],
     },
   ];
 
@@ -72,9 +81,9 @@ function BasicColumnChart({ chartWidth }) {
       series={BasicColumnData}
       type="bar"
       width={chartWidth}
-      // height={350}
+      height={350}
     />
   );
 }
 
-export default BasicColumnChart;
+export default LifePredictionChart;

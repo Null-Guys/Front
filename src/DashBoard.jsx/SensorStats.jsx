@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { CheckCircle, AlertTriangle, BarChart } from 'lucide-react';
+import { CheckCircle, AlertTriangle, BarChart, Cpu } from 'lucide-react';
 
 // 스타일 정의
 const StatCardWrapper = styled.div`
@@ -12,7 +12,7 @@ const StatCardWrapper = styled.div`
 const Card = styled.div`
   background-color: #ffffff;
   border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.09);
   padding: 16px;
   display: flex;
   flex: 1;
@@ -24,6 +24,7 @@ const TextGroup = styled.div``;
 
 const Title = styled.div`
   font-size: 15px;
+  font-weight: 600;
   color: #333333;
 `;
 
@@ -67,7 +68,7 @@ export default function DashboardTopStats() {
       <StatCard
         title="실시간 센서 상태"
         value="98.5%"
-        subtitle="정상 가동중"
+        subtitle="정상 가동 중"
         valueColor="#22c55e"
         icon={<CheckCircle size={20} color="#fff" />}
         iconColor="#22c55e" // 초록색
@@ -76,7 +77,8 @@ export default function DashboardTopStats() {
         title="전체 센서 수"
         value="256"
         subtitle="개 설치"
-        icon={<BarChart size={20} color="#fff" />}
+        // icon={<BarChart size={20} color="#fff" />}
+        icon={<Cpu size={20} color="#fff" />}
         iconColor="#3b82f6" // 파랑
       />
       <StatCard
