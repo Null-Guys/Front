@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import Chart from 'react-apexcharts';
 // import ApexCharts from 'apexcharts';
 import LineChart from './Charts/LineChart';
-import BasicColumnChart from './Charts/BasicColumnChart';
+// import BasicColumnChart from './Charts/BasicColumnChart';
 import PieChart from './Charts/PieChart';
 import HeatMap from './Charts/HeatMap';
 import styled from 'styled-components';
@@ -41,7 +41,7 @@ export default function Test() {
     <ChartWrapper ref={wrapperRef}>
       <Wrapper>
         <LineChart chartWidth={chartWidth} />
-        <BasicColumnChart chartWidth={chartWidth} />
+        {/* <BasicColumnChart chartWidth={chartWidth} /> */}
       </Wrapper>
       <Wrapper>
         <PieChart chartWidth={chartWidth} />

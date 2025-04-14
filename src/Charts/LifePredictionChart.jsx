@@ -7,6 +7,15 @@ function LifePredictionChart({ chartWidth }) {
       type: 'bar',
       fontFamily: 'Pretendard, sans-serif',
     },
+    title: {
+      text: '센서별 수명 예측',
+      align: 'left',
+      style: {
+        fontSize: '16px',
+        color: '#333333',
+        fontWeight: 'bold',
+      },
+    },
     plotOptions: {
       bar: {
         horizontal: false,
@@ -71,9 +80,8 @@ function LifePredictionChart({ chartWidth }) {
       options={BasicColumnOptions}
       series={BasicColumnData}
       type="bar"
-      width={600} // TODO: 고치기
-      // width={chartWidth}
-      // height={350}
+      width={chartWidth}
+      height={350}
     />
   );
 }

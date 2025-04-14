@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Chart from 'react-apexcharts';
 import ReactApexChart from 'react-apexcharts';
 
-export default function FailurePredictionChart({ chartWidth }) {
+export default function FailurePredictionChart({ chartWidth, chartHeight }) {
   const [content, setContent] = useState({
     series: [
       {
@@ -22,6 +22,15 @@ export default function FailurePredictionChart({ chartWidth }) {
         stacked: true,
         stackType: '100%',
       },
+      title: {
+        text: '센서별 고장 예측',
+        align: 'left', // 가운데 정렬
+        style: {
+          fontSize: '16px',
+          color: '#333333',
+          fontWeight: 'bold',
+        },
+      },
       // 반응형 디자인
       // responsive: [
       //   {
@@ -36,15 +45,7 @@ export default function FailurePredictionChart({ chartWidth }) {
       //   },
       // ],
       xaxis: {
-        categories: [
-          '모델명1',
-          '모델명2',
-          '모델명3',
-          '모델명4',
-          '모델명5',
-          '모델명6',
-          '모델명7',
-        ],
+        categories: ['모델명1', '모델명2', '모델명3', '모델명4', '모델명5', '모델명6', '모델명7'],
         labels: {
           style: {
             fontSize: '14px',
@@ -73,17 +74,14 @@ export default function FailurePredictionChart({ chartWidth }) {
   });
 
   return (
-    <div>
-      <div id="chart">
-        <ReactApexChart
-          options={content.options}
-          series={content.series}
-          type="bar"
-          width={600} // TODO: 고치기
-          height={350}
-        />
-      </div>
-      <div id="html-dist"></div>
-    </div>
+    <>
+      <ReactApexChart
+        options={content.options}
+        series={content.series}
+        type="bar"
+        width={chartWidth}
+        height={chartHeight}
+      />
+    </>
   );
 }
