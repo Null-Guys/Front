@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import styled from 'styled-components';
-import SensorStats from './SensorStats';
+import SensorStats from './Components/SensorStats';
 import LifePredictionChart from '../Charts/LifePredictionChart';
 import FailurePredictionChart from '../Charts/FailurePredictionChart';
+import CollapsibleTable from './Components/DataTable';
 
 export default function DashBoard() {
   const wrapperRef = useRef(null);
@@ -44,7 +45,6 @@ export default function DashBoard() {
         <SensorStats />
       </StatsWrapper>
       <ChartWrapper>
-        {/* TODO: 그래프 두개 높이 맞추기, 제목 달기 */}
         <Card id="card">
           <LifePredictionChart chartWidth={chartWidth} chartHeight={chartHeight} />
         </Card>
@@ -52,6 +52,10 @@ export default function DashBoard() {
           <FailurePredictionChart chartWidth={chartWidth} chartHeight={chartHeight} />
         </Card>
       </ChartWrapper>
+      <Card style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
+        <div style={{ color: '#333333', fontWeight: 'bold', margin: ' 0 0 16px 8px' }}>상세 데이터</div>
+        <CollapsibleTable style={{ margin: '0 -20px' }} />
+      </Card>
     </DashBoardWrapper>
   );
 }
@@ -68,7 +72,7 @@ const StatsWrapper = styled.div`
 
 const ChartWrapper = styled.div`
   display: flex;
-  margin-top: 28px;
+  margin: 28px 0;
   width: 80vw;
   gap: 20px;
 `;
