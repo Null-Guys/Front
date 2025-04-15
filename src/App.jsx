@@ -1,11 +1,17 @@
 import { useState } from 'react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Test from './Test';
 import DashBoard from './DashBoard.jsx/DashBoard';
-import './App.css';
+
+const theme = createTheme({
+  typography: {
+    fontFamily: 'Pretendard, sans-serif',
+  },
+});
 
 function App() {
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <DashBoard />
       {/* <Test /> */}
       {/* <div>
@@ -21,7 +27,7 @@ function App() {
           count is {count}
         </button>
       </div> */}
-    </>
+    </ThemeProvider>
   );
 }
 
