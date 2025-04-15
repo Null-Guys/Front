@@ -7,6 +7,11 @@ const theme = createTheme({
   typography: {
     fontFamily: 'Pretendard, sans-serif',
   },
+  palette: {
+    text: {
+      primary: '#333333',
+    },
+  },
 });
 
 function App() {

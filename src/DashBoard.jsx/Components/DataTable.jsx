@@ -124,21 +124,31 @@ const rows = [
 
 export default function CollapsibleTable() {
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ boxShadow: '0', margin: '0 -20px', width: 'calc(100% + 40px)' }}>
       <Table aria-label="collapsible table">
         <TableHead>
-          <TableRow>
+          <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
             <TableCell sx={{ width: '28px' }} />
-            <TableCell align="center">모델명</TableCell>
-            <TableCell align="center">변수1</TableCell>
-            <TableCell align="center">변수2</TableCell>
-            <TableCell align="center">변수3</TableCell>
-            <TableCell align="center">변수4</TableCell>
+            <TableCell align="center" sx={{ fontSize: '15px', fontWeight: 'bold' }}>
+              모델명
+            </TableCell>
+            <TableCell align="center" sx={{ fontSize: '15px', fontWeight: 'bold' }}>
+              변수1
+            </TableCell>
+            <TableCell align="center" sx={{ fontSize: '15px', fontWeight: 'bold' }}>
+              변수2
+            </TableCell>
+            <TableCell align="center" sx={{ fontSize: '15px', fontWeight: 'bold' }}>
+              변수3
+            </TableCell>
+            <TableCell align="center" sx={{ fontSize: '15px', fontWeight: 'bold' }}>
+              변수4
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <Row key={row.name} row={row} />
+            <Row key={row.name} row={row} sx={{ fontSize: '14px' }} />
           ))}
         </TableBody>
       </Table>

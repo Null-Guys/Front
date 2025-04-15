@@ -55,7 +55,7 @@ export default function FailurePredictionChart({ chartWidth, chartHeight }) {
       },
       yaxis: {
         title: {
-          text: '고장 예측(정확도)',
+          text: '예측 정확도',
           style: {
             fontSize: '14px',
             color: '#333333',

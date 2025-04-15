@@ -52,7 +52,10 @@ export default function DashBoard() {
           <FailurePredictionChart chartWidth={chartWidth} chartHeight={chartHeight} />
         </Card>
       </ChartWrapper>
-      <CollapsibleTable />
+      <Card style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
+        <div style={{ color: '#333333', fontWeight: 'bold', margin: ' 0 0 16px 8px' }}>상세 데이터</div>
+        <CollapsibleTable style={{ margin: '0 -20px' }} />
+      </Card>
     </DashBoardWrapper>
   );
 }
