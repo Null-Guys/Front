@@ -8,7 +8,7 @@ function LifePredictionChart({ chartWidth }) {
       fontFamily: 'Pretendard, sans-serif',
     },
     title: {
-      text: '센서별 수명 예측',
+      text: '연료 전지 수명 예측',
       align: 'left',
       style: {
         fontSize: '16px',

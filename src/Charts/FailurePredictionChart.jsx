@@ -22,10 +22,10 @@ export default function FailurePredictionChart({ chartWidth, chartHeight }) {
         stacked: true,
         stackType: '100%',
       },
-      colors: ['#1eca5d', '#EF4444'], // ✅ 색상 지정
+      colors: ['#1eca5d', '#EF4444'], // 색상 지정
       title: {
-        text: '센서별 고장 예측',
-        align: 'left', // 가운데 정렬
+        text: '연료 전지 고장 진단',
+        align: 'left',
         style: {
           fontSize: '16px',
           color: '#333333',
