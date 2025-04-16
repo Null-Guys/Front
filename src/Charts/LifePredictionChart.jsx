@@ -33,15 +33,7 @@ function LifePredictionChart({ chartWidth }) {
       colors: ['transparent'],
     },
     xaxis: {
-      categories: [
-        '모델명1',
-        '모델명2',
-        '모델명3',
-        '모델명4',
-        '모델명5',
-        '모델명6',
-        '모델명7',
-      ],
+      categories: ['모델명1', '모델명2', '모델명3', '모델명4', '모델명5', '모델명6', '모델명7'],
       labels: {
         style: {
           fontSize: '14px',
@@ -62,6 +54,7 @@ function LifePredictionChart({ chartWidth }) {
       opacity: 1,
     },
     tooltip: {
+      // TODO: 툴팁 글자색 바꾸기
       y: {
         formatter: (val) => `$ ${val}일`,
       },
@@ -76,13 +69,7 @@ function LifePredictionChart({ chartWidth }) {
   ];
 
   return (
-    <Chart
-      options={BasicColumnOptions}
-      series={BasicColumnData}
-      type="bar"
-      width={chartWidth}
-      height={350}
-    />
+    <Chart options={BasicColumnOptions} series={BasicColumnData} type="bar" width={chartWidth} height={350} />
   );
 }
 
