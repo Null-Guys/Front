@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import styled from 'styled-components';
 import SensorStats from './Components/SensorStats';
-import LifePredictionChart from '../Charts/LifePredictionChart';
-import FailurePredictionChart from '../Charts/FailurePredictionChart';
+import LifePredictionChart from '../../Charts/LifePredictionChart';
+import FailurePredictionChart from '../../Charts/FailurePredictionChart';
 import CollapsibleTable from './Components/DataTable';
 
 export default function DashBoard() {

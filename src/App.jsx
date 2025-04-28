@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Test from './Test';
-import DashBoard from './DashBoard.jsx/DashBoard';
+import DashBoard from './Pages/DashBoard/DashBoard';
 
 const theme = createTheme({
   typography: {
