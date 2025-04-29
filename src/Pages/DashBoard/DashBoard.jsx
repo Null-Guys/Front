@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import NavBar from '../../Components/NavBar';
 import SensorStats from '../../Components/SensorStats';
 import LifePredictionChart from '../../Charts/LifePredictionChart';
 import FailurePredictionChart from '../../Charts/FailurePredictionChart';
@@ -42,31 +43,42 @@ export default function DashBoard() {
   }, [chartWidth]);
 
   return (
-    <DashBoardWrapper ref={wrapperRef}>
-      <StatsWrapper>
-        <SensorStats />
-      </StatsWrapper>
-      <ChartWrapper>
-        <Card id="card">
-          <LifePredictionChart chartWidth={chartWidth} chartHeight={chartHeight} />
+    <Container>
+      <NavBar />
+      <DashBoardWrapper ref={wrapperRef}>
+        <StatsWrapper>
+          <SensorStats />
+        </StatsWrapper>
+        <ChartWrapper>
+          <Card id="card">
+            <LifePredictionChart chartWidth={chartWidth} chartHeight={chartHeight} />
+          </Card>
+          <Card>
+            <FailurePredictionChart chartWidth={chartWidth} chartHeight={chartHeight} />
+          </Card>
+        </ChartWrapper>
+        <Card style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
+          <div style={{ color: '#333333', fontWeight: 'bold', margin: ' 0 0 16px 8px' }}>상세 데이터</div>
+          <CollapsibleTable style={{ margin: '0 -20px' }} />
         </Card>
-        <Card>
-          <FailurePredictionChart chartWidth={chartWidth} chartHeight={chartHeight} />
-        </Card>
-      </ChartWrapper>
-      <Card style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
-        <div style={{ color: '#333333', fontWeight: 'bold', margin: ' 0 0 16px 8px' }}>상세 데이터</div>
-        <CollapsibleTable style={{ margin: '0 -20px' }} />
-      </Card>
-    </DashBoardWrapper>
+      </DashBoardWrapper>
+    </Container>
   );
 }
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const DashBoardWrapper = styled.div`
+  align-self: center;
   display: flex;
   flex-direction: column;
   width: 80vw;
   margin: 40px 0;
+  margin-top: calc(40px + 56px); // 56px은 NavBar 높이
 `;
 
 const StatsWrapper = styled.div`
