@@ -6,9 +6,7 @@ import LifePredictionChart from '../../Charts/LifePredictionChart';
 import FailurePredictionChart from '../../Charts/FailurePredictionChart';
 import CollapsibleTable from '../../Components/DataTable';
 
-// TODO: 대시보드에서 업로드한 데이터 삭제하는(파일 업로드 페이지로 돌아가는) 기능 구현
-
-export default function DashBoard() {
+export default function DashBoard({ setHasUploaded }) {
   const wrapperRef = useRef(null);
   const [chartWidth, setChartWidth] = useState(0);
   const [chartHeight, setChartHeight] = useState(0);
@@ -44,7 +42,7 @@ export default function DashBoard() {
 
   return (
     <Container>
-      <NavBar />
+      <NavBar setHasUploaded={setHasUploaded} />
       <DashBoardWrapper ref={wrapperRef}>
         <StatsWrapper>
           <SensorStats />
