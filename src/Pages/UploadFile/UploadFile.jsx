@@ -44,6 +44,7 @@ const Card = styled.div`
   align-items: center;
   width: 30vw;
   max-width: 600px;
+  min-width: 400px;
   border-radius: 16px;
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.09);
   padding: 16px;
