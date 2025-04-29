@@ -31,26 +31,26 @@ export default function UploadFile({ setHasUploaded }) {
   );
 }
 
-// 스타일 컴포넌트 TODO: 추후 변경 예정
 const Container = styled.div`
-  width: 100%;
-  min-height: 90vh;
+  margin: -40px 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f9fafb;
 `;
 
 const Card = styled.div`
-  background: white;
-  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30vw;
+  max-width: 600px;
   border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  text-align: center;
-  width: 400px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.09);
+  padding: 16px;
 `;
 
 const Title = styled.h2`
+  color: #333333;
   font-size: 24px;
   margin-bottom: 12px;
 `;
@@ -67,7 +67,7 @@ const FileInputLabel = styled.label`
   padding: 12px 20px;
   border-radius: 8px;
   cursor: pointer;
-  display: inline-block;
+  width: fit-content;
   margin-bottom: 16px;
   font-weight: 500;
 `;

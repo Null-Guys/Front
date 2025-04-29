@@ -1,16 +1,18 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import SensorStats from '../../Components/SensorStats';
 import LifePredictionChart from '../../Charts/LifePredictionChart';
 import FailurePredictionChart from '../../Charts/FailurePredictionChart';
 import CollapsibleTable from '../../Components/DataTable';
 
+// TODO: 대시보드에서 업로드한 데이터 삭제하는(파일 업로드 페이지로 돌아가는) 기능 구현
+
 export default function DashBoard() {
   const wrapperRef = useRef(null);
   const [chartWidth, setChartWidth] = useState(0);
   const [chartHeight, setChartHeight] = useState(0);
 
-  // 컴포넌트가 렌더링될 때, 화면 크기 변화가 감지될 때 차트 너비를 업데이트
+  // 컴포넌트가 렌더링될 때 화면 크기 변화가 감지될 때 차트 너비를 업데이트
   useEffect(() => {
     const updateChartWidth = () => {
       const el = document.getElementById('card');
@@ -64,6 +66,7 @@ const DashBoardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 80vw;
+  margin: 40px 0;
 `;
 
 const StatsWrapper = styled.div`
