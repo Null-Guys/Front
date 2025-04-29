@@ -41,7 +41,10 @@ function App() {
               hasUploaded ? <Navigate to="/dashboard" /> : <UploadFile setHasUploaded={setHasUploaded} />
             }
           />
-          <Route path="/dashboard" element={hasUploaded ? <DashBoard /> : <Navigate to="/" />} />
+          <Route
+            path="/dashboard"
+            element={hasUploaded ? <DashBoard setHasUploaded={setHasUploaded} /> : <Navigate to="/" />}
+          />
         </Routes>
       </Router>
     </ThemeProvider>
