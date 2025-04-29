@@ -1,21 +1,18 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import UploadModal from './UploadModal';
 
-export default function NavBar({ setHasUploaded }) {
-  const navigate = useNavigate();
-
-  const handleResetUpload = () => {
-    localStorage.removeItem('uploadedCsv'); // 1. 로컬스토리지 값 삭제
-    setHasUploaded(false);
-    navigate('/'); // 2. 업로드 페이지로 이동
-  };
+export default function NavBar() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <Container>
-      <img src="" alt="로고" />
-      <UploadButton onClick={handleResetUpload}>파일 업로드</UploadButton>
-    </Container>
+    <>
+      <Container>
+        <img src="" alt="로고" />
+        <UploadButton onClick={() => setIsModalOpen(true)}>파일 업로드</UploadButton>
+      </Container>
+      {isModalOpen && <UploadModal setIsModalOpen={setIsModalOpen} />}
+    </>
   );
 }
 

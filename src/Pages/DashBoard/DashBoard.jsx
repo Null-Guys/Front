@@ -6,7 +6,7 @@ import LifePredictionChart from '../../Charts/LifePredictionChart';
 import FailurePredictionChart from '../../Charts/FailurePredictionChart';
 import CollapsibleTable from '../../Components/DataTable';
 
-export default function DashBoard({ setHasUploaded }) {
+export default function DashBoard() {
   const wrapperRef = useRef(null);
   const [chartWidth, setChartWidth] = useState(0);
   const [chartHeight, setChartHeight] = useState(0);
@@ -42,7 +42,7 @@ export default function DashBoard({ setHasUploaded }) {
 
   return (
     <Container>
-      <NavBar setHasUploaded={setHasUploaded} />
+      <NavBar />
       <DashBoardWrapper ref={wrapperRef}>
         <StatsWrapper>
           <SensorStats />

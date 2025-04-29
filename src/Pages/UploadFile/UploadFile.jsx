@@ -31,6 +31,7 @@ export default function UploadFile({ setHasUploaded }) {
   );
 }
 
+// TODO: 디자인 고치기
 const Container = styled.div`
   margin: -40px 0;
   display: flex;
