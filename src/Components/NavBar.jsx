@@ -8,7 +8,7 @@ export default function NavBar() {
   return (
     <>
       <Container>
-        <img src="" alt="로고" />
+        <img alt="로고" />
         <UploadButton onClick={() => setIsModalOpen(true)}>파일 업로드</UploadButton>
       </Container>
       {isModalOpen && <UploadModal setIsModalOpen={setIsModalOpen} />}
@@ -41,6 +41,7 @@ const UploadButton = styled.button`
   cursor: pointer;
   background-color: #1976d2;
   transition: background-color 0.2s ease;
+  outline: 2px solid transparent;
 
   &:hover {
     background-color: #1565c0;
@@ -48,5 +49,9 @@ const UploadButton = styled.button`
 
   &:active {
     background-color: #0d47a1;
+  }
+
+  &:focus {
+    outline: 2px solid transparent; //  outline을 완전히 없애지 않고 단축키 사용자의 접근성도 챙김
   }
 `;
