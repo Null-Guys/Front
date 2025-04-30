@@ -17,7 +17,7 @@ export default function UploadModal({ setIsModalOpen }) {
   };
 
   const onClose = () => {
-    console.log(`파일 업로드 완료: ${file.name}`);
+    if (file) console.log(`파일 업로드 완료: ${file.name}`);
     setIsModalOpen(false);
   };
 
@@ -97,5 +97,9 @@ const UploadButton = styled.button`
 
   &:active {
     background-color: #0d47a1;
+  }
+
+  &:focus {
+    outline: 2px solid transparent;
   }
 `;
