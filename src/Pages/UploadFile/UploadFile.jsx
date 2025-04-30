@@ -31,10 +31,10 @@ export default function UploadFile({ setHasUploaded }) {
   );
 }
 
-// TODO: 디자인 고치기
 const Container = styled.div`
-  margin: -40px 0;
   display: flex;
+  width: 100%;
+  height: 100%;
   justify-content: center;
   align-items: center;
 `;
