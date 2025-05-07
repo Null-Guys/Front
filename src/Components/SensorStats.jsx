@@ -89,6 +89,7 @@ export default function DashboardTopStats() {
         icon={<AlertTriangle size={20} color="#fff" />}
         iconColor="#ef4444" // 빨강
       />
+      {/* TODO: 나중에 정상/경고/열화 별로 색상 다르게? */}
       <StatCard
         title="교체 조건"
         value="정상"
