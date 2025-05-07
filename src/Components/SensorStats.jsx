@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { CheckCircle, AlertTriangle, BarChart, Cpu } from 'lucide-react';
+import { CheckCircle, AlertTriangle, BarChart, ChevronsUp } from 'lucide-react';
 
 // 스타일 정의
 const StatCardWrapper = styled.div`
@@ -66,33 +66,34 @@ export default function DashboardTopStats() {
   return (
     <StatCardWrapper>
       <StatCard
-        title="실시간 센서 상태"
+        title="열화 지표"
         value="98.5%"
-        subtitle="정상 가동 중"
+        subtitle="SOH"
         valueColor="#22c55e"
         icon={<CheckCircle size={20} color="#fff" />}
         iconColor="#22c55e" // 초록색
       />
       <StatCard
-        title="전체 센서 수"
-        value="256"
-        subtitle="개 설치"
+        title="열화 속도"
+        value="0.6"
+        subtitle="VDR"
         // icon={<BarChart size={20} color="#fff" />}
-        icon={<Cpu size={20} color="#fff" />}
+        icon={<ChevronsUp size={20} color="#fff" />}
         iconColor="#3b82f6" // 파랑
       />
       <StatCard
-        title="이상 감지 건수"
-        value="12"
-        subtitle="오늘"
+        title="전압 임계값 이하 시점"
+        value="12 min"
+        subtitle="RUL"
         valueColor="#ef4444"
         icon={<AlertTriangle size={20} color="#fff" />}
         iconColor="#ef4444" // 빨강
       />
+      {/* TODO: 나중에 정상/경고/열화 별로 색상 다르게? */}
       <StatCard
-        title="정상 가동률"
-        value="99.2%"
-        subtitle="지난 30일"
+        title="교체 조건"
+        value="정상"
+        subtitle="STT"
         icon={<BarChart size={20} color="#fff" />}
         iconColor="#0ea5e9" // 하늘색
       />

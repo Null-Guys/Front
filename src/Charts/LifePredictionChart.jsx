@@ -7,7 +7,7 @@ export default function LifePredictionChart({ chartWidth, chartHeight }) {
     series: [
       {
         name: 'SOH',
-        data: [91, 90, 85, 82, 79, 76, 70],
+        data: [19, 18, 17.5, 17, 16.5, 15, 14.8],
       },
     ],
     options: {
@@ -41,7 +41,7 @@ export default function LifePredictionChart({ chartWidth, chartHeight }) {
         },
       },
       xaxis: {
-        categories: [10, 9, 8, 7, 6, 5, 4],
+        categories: [4, 5, 6, 7, 8, 9, 10],
         labels: {
           formatter: function (val) {
             return `${val}h`;
@@ -52,7 +52,7 @@ export default function LifePredictionChart({ chartWidth, chartHeight }) {
           },
         },
         title: {
-          text: '남은 수명',
+          text: '시간',
           style: {
             fontSize: '14px',
             color: '#333333',
@@ -60,12 +60,12 @@ export default function LifePredictionChart({ chartWidth, chartHeight }) {
         },
       },
       yaxis: {
-        min: 50, // 최소값 (50%)
-        max: 100, // 최대값 (100%)
-        tickAmount: 5, // 눈금 개수 (50, 60, 70, 80, 90, 100)
+        min: 10, // 최소값 (10V)
+        max: 20, // 최대값 (100V)
+        tickAmount: 5, // 눈금 개수 (10, 12, 14, 16, 18, 20)
         labels: {
           formatter: function (val) {
-            return `${val}%`;
+            return `${val}V`;
           },
           style: {
             fontSize: '14px',
@@ -73,7 +73,7 @@ export default function LifePredictionChart({ chartWidth, chartHeight }) {
           },
         },
         title: {
-          text: 'SOH',
+          text: '전압',
           style: {
             fontSize: '14px',
             color: '#333333',
