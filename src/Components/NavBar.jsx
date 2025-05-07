@@ -8,7 +8,7 @@ export default function NavBar() {
   return (
     <>
       <Container>
-        <img alt="로고" />
+        <img src="/tmpLogo.png" alt="로고" />
         <UploadButton onClick={() => setIsModalOpen(true)}>파일 업로드</UploadButton>
       </Container>
       {isModalOpen && <UploadModal setIsModalOpen={setIsModalOpen} />}
@@ -28,6 +28,11 @@ const Container = styled.div`
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
   background-color: #ffffff;
   z-index: 100;
+
+  img {
+    width: 88px;
+    height: auto;
+  }
 `;
 
 const UploadButton = styled.button`
