@@ -1,6 +1,92 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { CheckCircle, AlertTriangle, BarChart, ChevronsUp } from 'lucide-react';
+import { fetchInfo } from '../API/fetchInfo';
+
+export default function DashboardTopStats() {
+  const [info, setInfo] = useState(null);
+  const isLoading = !info;
+
+  useEffect(() => {
+    const loadInfo = async () => {
+      try {
+        const data = await fetchInfo(0);
+        console.log(data); // 응답 데이터
+        setInfo(data); // 상태에 저장
+        console.log(info.SOH);
+      } catch (error) {
+        console.error('정보를 가져오는 데 실패했습니다:', error);
+      }
+    };
+
+    loadInfo();
+  }, []);
+
+  return (
+    <StatCardWrapper>
+      <StatCard
+        title="열화 지표"
+        value={isLoading ? '로딩 중...' : `${info.SOH}%`}
+        subtitle="SOH"
+        valueColor={isLoading ? '#9ca3af' : '#22c55e'}
+        icon={<CheckCircle size={20} color="#fff" />}
+        iconColor="#22c55e"
+      />
+      <StatCard
+        title="열화 속도"
+        value={isLoading ? '로딩 중...' : `${info.VDR}`}
+        subtitle="VDR"
+        valueColor={isLoading ? '#9ca3af' : '#333333'}
+        // icon={<BarChart size={20} color="#fff" />}
+        icon={<ChevronsUp size={20} color="#fff" />}
+        iconColor="#3b82f6"
+      />
+      <StatCard
+        title="전압 임계값 이하 시점"
+        value={isLoading ? '로딩 중...' : info.RUL === -1 ? '-' : `${info.RUL}분`}
+        subtitle="RUL"
+        valueColor={
+          isLoading
+            ? '#9ca3af' // 회색 (로딩 중)
+            : info.RUL === -1
+            ? '#333333' // -1일 때
+            : '#ef4444' // 자연수일 때
+        }
+        icon={<AlertTriangle size={20} color="#fff" />}
+        iconColor="#ef4444"
+      />
+      <StatCard
+        title="교체 조건"
+        value="정상"
+        value={isLoading ? '로딩 중...' : `${info.STT}`}
+        subtitle="STT"
+        valueColor={
+          isLoading
+            ? '#9ca3af' // 로딩 중
+            : info.STT === '정상'
+            ? '#22c55e'
+            : info.STT === '경고'
+            ? '#f97316'
+            : '#ef4444' // 열화
+        }
+        icon={<BarChart size={20} color="#fff" />}
+        iconColor="#0ea5e9" // 하늘색
+      />
+    </StatCardWrapper>
+  );
+}
+
+const StatCard = ({ title, value, subtitle, valueColor, icon, iconColor }) => (
+  <Card>
+    <TextGroup>
+      <Title>{title}</Title>
+      <Value valueColor={valueColor}>{value}</Value>
+      <Subtitle>{subtitle}</Subtitle>
+    </TextGroup>
+    <IconWrapper color={iconColor}>{icon}</IconWrapper>
+  </Card>
+);
 
 // 스타일 정의
 const StatCardWrapper = styled.div`
@@ -50,53 +136,3 @@ const IconWrapper = styled.div`
   justify-content: center;
   background-color: ${(props) => props.color || '#ccc'};
 `;
-
-const StatCard = ({ title, value, subtitle, valueColor, icon, iconColor }) => (
-  <Card>
-    <TextGroup>
-      <Title>{title}</Title>
-      <Value valueColor={valueColor}>{value}</Value>
-      <Subtitle>{subtitle}</Subtitle>
-    </TextGroup>
-    <IconWrapper color={iconColor}>{icon}</IconWrapper>
-  </Card>
-);
-
-export default function DashboardTopStats() {
-  return (
-    <StatCardWrapper>
-      <StatCard
-        title="열화 지표"
-        value="98.5%"
-        subtitle="SOH"
-        valueColor="#22c55e"
-        icon={<CheckCircle size={20} color="#fff" />}
-        iconColor="#22c55e" // 초록색
-      />
-      <StatCard
-        title="열화 속도"
-        value="0.6"
-        subtitle="VDR"
-        // icon={<BarChart size={20} color="#fff" />}
-        icon={<ChevronsUp size={20} color="#fff" />}
-        iconColor="#3b82f6" // 파랑
-      />
-      <StatCard
-        title="전압 임계값 이하 시점"
-        value="12 min"
-        subtitle="RUL"
-        valueColor="#ef4444"
-        icon={<AlertTriangle size={20} color="#fff" />}
-        iconColor="#ef4444" // 빨강
-      />
-      {/* TODO: 나중에 정상/경고/열화 별로 색상 다르게? */}
-      <StatCard
-        title="교체 조건"
-        value="정상"
-        subtitle="STT"
-        icon={<BarChart size={20} color="#fff" />}
-        iconColor="#0ea5e9" // 하늘색
-      />
-    </StatCardWrapper>
-  );
-}
