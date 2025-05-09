@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export async function fetchInfo(filename, time) {
-  const response = await axios.get('http://localhost:3000/information', {
-    params: { filename, time },
+export async function fetchInfo(time) {
+  const response = await axios.get('http://localhost:5000/information', {
+    params: { time },
   });
 
   return response.data;
