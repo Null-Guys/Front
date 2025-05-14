@@ -9,7 +9,7 @@ export default function NavBar() {
     <>
       <Container>
         <img src="/tmpLogo.png" alt="로고" />
-        <UploadButton onClick={() => setIsModalOpen(true)}>파일 업로드</UploadButton>
+        {/* <UploadButton onClick={() => setIsModalOpen(true)}>파일 업로드</UploadButton> */}
       </Container>
       {isModalOpen && <UploadModal setIsModalOpen={setIsModalOpen} />}
     </>
