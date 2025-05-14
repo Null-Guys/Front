@@ -5,11 +5,17 @@ import SensorStats from '../../Components/SensorStats';
 import LifePredictionChart from '../../Charts/LifePredictionChart';
 import FailurePredictionChart from '../../Charts/FailurePredictionChart';
 import CollapsibleTable from '../../Components/DataTable';
+import { fetchInfo } from '../../API/fetchInfo';
 
 export default function DashBoard() {
   const wrapperRef = useRef(null);
   const [chartWidth, setChartWidth] = useState(0);
   const [chartHeight, setChartHeight] = useState(0);
+
+  const [info, setInfo] = useState(null);
+  const [voltages, setVoltages] = useState([]);
+  const [states, setStates] = useState(Array(7).fill(null)); // 초기 states 배열을 null로 채움
+  const [requestIdx, setRequestIdx] = useState(0); // 요청 순번
 
   // 컴포넌트가 렌더링될 때 화면 크기 변화가 감지될 때 차트 너비를 업데이트
   useEffect(() => {
@@ -40,6 +46,36 @@ export default function DashBoard() {
     };
   }, [chartWidth]);
 
+  useEffect(() => {
+    let timer;
+    const loadInfo = async () => {
+      try {
+        const data = await fetchInfo(requestIdx);
+        console.log(data); // 응답 데이터
+
+        setInfo(data); // 전체 데이터 저장
+        setVoltages((prev) => [...prev, data.utot[1]]); // 배열에 누적
+        setStates((prev) => {
+          const newStates = [...prev];
+          newStates[requestIdx] = data.isBreak; // 현재 인덱스 위치에 데이터 저장
+          return newStates;
+        });
+        setRequestIdx((prev) => prev + 1); // 다음 요청 인덱스 증가
+        console.log(requestIdx, states);
+      } catch (error) {
+        console.error('정보를 가져오는 데 실패했습니다:', error);
+      }
+    };
+
+    if (requestIdx === 0 && voltages.length === 0 && states.length === 0) {
+      loadInfo(); // 처음 한 번 바로 호출
+    } else if (voltages.length < 7) {
+      timer = setTimeout(loadInfo, 2000); // 이후엔 n초마다
+    }
+
+    return () => clearTimeout(timer);
+  }, [requestIdx]);
+
   return (
     <Container>
       <NavBar />
@@ -49,10 +85,20 @@ export default function DashBoard() {
         </StatsWrapper>
         <ChartWrapper>
           <Card id="card">
-            <LifePredictionChart chartWidth={chartWidth} chartHeight={chartHeight} />
+            <LifePredictionChart
+              chartWidth={chartWidth}
+              chartHeight={chartHeight}
+              voltages={voltages}
+              requestIdx={requestIdx}
+            />
           </Card>
           <Card>
-            <FailurePredictionChart chartWidth={chartWidth} chartHeight={chartHeight} />
+            <FailurePredictionChart
+              chartWidth={chartWidth}
+              chartHeight={chartHeight}
+              states={states}
+              requestIdx={requestIdx}
+            />
           </Card>
         </ChartWrapper>
         <Card style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
