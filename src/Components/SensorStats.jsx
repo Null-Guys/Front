@@ -14,7 +14,7 @@ export default function DashboardTopStats() {
         const data = await fetchInfo(0);
         console.log(data); // 응답 데이터
         setInfo(data); // 상태에 저장
-        console.log(info.SOH);
+        console.log(data.SOH);
       } catch (error) {
         console.error('정보를 가져오는 데 실패했습니다:', error);
       }
