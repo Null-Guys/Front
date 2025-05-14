@@ -30,7 +30,7 @@ export default function LifePredictionChart({ chartWidth, chartHeight, voltages,
       row: { colors: ['#f3f3f3', 'transparent'], opacity: 0.5 },
     },
     xaxis: {
-      categories: [0, 30, 60, 90, 120, 150, 180],
+      categories: [30, 60, 90, 120, 150, 180, 210],
       labels: {
         formatter: (val) => `${val}분`,
         style: { fontSize: '14px', colors: '#333333' },
@@ -60,6 +60,13 @@ export default function LifePredictionChart({ chartWidth, chartHeight, voltages,
           color: '#333333',
         },
       },
+    },
+    markers: {
+      size: 5, // 점 크기
+      colors: ['#008FFB'], // 점 색상
+      strokeColors: '#fff', // 점 테두리 색상
+      strokeWidth: 2, // 점 테두리 두께
+      hover: { size: 7 }, // 마우스 오버 시 점 크기
     },
   };
 

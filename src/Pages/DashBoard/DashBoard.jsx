@@ -51,16 +51,19 @@ export default function DashBoard() {
       try {
         const data = await fetchInfo(requestIdx);
         setInfo(data);
-        setVoltages((prev) => [...prev, data.utot[1]]);
-        setStates((prev) => {
-          const newStates = [...prev];
-          newStates[requestIdx] = data.isBreak;
-          return newStates;
+
+        // 최신 7개만 유지
+        setVoltages((prev) => {
+          const next = [...prev, data.utot[1]];
+          return next.length > 7 ? next.slice(-7) : next;
         });
-        // 응답 받자마자 바로 다음 요청 인덱스 증가
-        if (requestIdx < 29) {
-          setRequestIdx((prev) => prev + 1);
-        }
+
+        setStates((prev) => {
+          const next = [...prev, data.isBreak];
+          return next.length > 7 ? next.slice(-7) : next;
+        });
+
+        if (requestIdx < 29) setRequestIdx((prev) => prev + 1);
       } catch (error) {
         console.error('정보를 가져오는 데 실패했습니다:', error);
       }
