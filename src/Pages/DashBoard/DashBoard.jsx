@@ -4,7 +4,8 @@ import NavBar from '../../Components/NavBar';
 import SensorStats from '../../Components/SensorStats';
 import LifePredictionChart from '../../Charts/LifePredictionChart';
 import FailurePredictionChart from '../../Charts/FailurePredictionChart';
-import CollapsibleTable from '../../Components/DataTable';
+// import CollapsibleTable from '../../Components/DataTable0';
+import StickyHeadTable from '../../Components/DataTable';
 import { fetchInfo } from '../../API/fetchInfo';
 
 export default function DashBoard() {
@@ -59,7 +60,7 @@ export default function DashBoard() {
         });
 
         setStates((prev) => {
-          const next = [data.isBreak, ...prev];
+          const next = [...prev, data.isBreak];
           return next.length > 7 ? next.slice(-7) : next;
         });
 
@@ -104,7 +105,7 @@ export default function DashBoard() {
         </ChartWrapper>
         <Card style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
           <div style={{ color: '#333333', fontWeight: 'bold', margin: ' 0 0 16px 8px' }}>상세 데이터</div>
-          <CollapsibleTable style={{ margin: '0 -20px' }} />
+          <StickyHeadTable style={{ margin: '0 -20px' }} />
         </Card>
       </DashBoardWrapper>
     </Container>
