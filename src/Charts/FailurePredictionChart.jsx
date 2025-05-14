@@ -1,23 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import Chart from 'react-apexcharts';
 import ReactApexChart from 'react-apexcharts';
-import { fetchInfo } from '../API/fetchInfo';
 
 export default function FailurePredictionChart({ chartWidth, chartHeight, states, requestIdx }) {
   const timeCategories = ['10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00'];
 
+  const paddedStates = [...states, ...Array(7 - states.length).fill(null)];
+  console.log(paddedStates);
   const chartSeries = [
     {
       name: '상태',
-      data: states.map((isBreak, index) => ({
-        x: timeCategories[index],
+      data: timeCategories.map((label, idx) => ({
+        x: label,
         y: 1,
-        fillColor:
-          isBreak === null
-            ? 'rgba(0,0,0,0)' // 데이터 미수신: 투명
-            : isBreak
-            ? '#F44336' // 고장
-            : '#4CAF50', // 정상
+        fillColor: paddedStates[idx] === null ? 'rgba(0,0,0,0)' : paddedStates[idx] ? '#F44336' : '#4CAF50',
       })),
     },
   ];

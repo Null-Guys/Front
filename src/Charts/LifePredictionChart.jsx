@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Chart from 'react-apexcharts';
 import ReactApexChart from 'react-apexcharts';
-import { fetchInfo } from '../API/fetchInfo';
 
-// TODO: 요청한 값이 7개를 초과하면 제일 오래된 것부터 밀리는 로직 필요
+// TODO: 최신 7개 데이터만 사용되는지 확인 필요 (x축은 아직 변경x)
 export default function LifePredictionChart({ chartWidth, chartHeight, voltages, requestIdx }) {
   const paddedVoltages = [...voltages, ...Array(7 - voltages.length).fill(null)];
-
+  // console.log('paddedVoltages', paddedVoltages);
   const chartOptions = {
     chart: {
       type: 'line',
@@ -41,9 +40,9 @@ export default function LifePredictionChart({ chartWidth, chartHeight, voltages,
       },
     },
     yaxis: {
-      min: 3.0, // 최소값
-      max: 3.4, // 최대값
-      tickAmount: 10, // 눈금 개수
+      min: 3.32, // 최소값
+      max: 3.35, // 최대값
+      tickAmount: 20, // 눈금 개수
       labels: {
         formatter: function (val) {
           return `${val}V`;

@@ -14,7 +14,7 @@ export default function DashBoard() {
 
   const [info, setInfo] = useState(null);
   const [voltages, setVoltages] = useState([]);
-  const [states, setStates] = useState(Array(7).fill(null)); // 초기 states 배열을 null로 채움
+  const [states, setStates] = useState([]);
   const [requestIdx, setRequestIdx] = useState(0); // 요청 순번
 
   // 컴포넌트가 렌더링될 때 화면 크기 변화가 감지될 때 차트 너비를 업데이트
@@ -50,26 +50,31 @@ export default function DashBoard() {
     const loadInfo = async () => {
       try {
         const data = await fetchInfo(requestIdx);
-        setInfo(data);
 
-        // 최신 7개만 유지
+        setInfo(data);
+        console.log(data);
         setVoltages((prev) => {
           const next = [...prev, data.utot[1]];
           return next.length > 7 ? next.slice(-7) : next;
         });
 
         setStates((prev) => {
-          const next = [...prev, data.isBreak];
+          const next = [data.isBreak, ...prev];
           return next.length > 7 ? next.slice(-7) : next;
         });
 
-        if (requestIdx < 29) setRequestIdx((prev) => prev + 1);
+        // 다음 요청은 약간의 지연 후에 실행 (렌더링 보장)
+        setTimeout(() => {
+          if (requestIdx < 29) setRequestIdx((prev) => prev + 1);
+        }, 100); // 100ms 정도면 충분
       } catch (error) {
         console.error('정보를 가져오는 데 실패했습니다:', error);
       }
     };
 
-    if (requestIdx < 30) loadInfo();
+    if (requestIdx < 30) {
+      loadInfo();
+    }
   }, [requestIdx]);
 
   return (
@@ -77,7 +82,7 @@ export default function DashBoard() {
       <NavBar />
       <DashBoardWrapper ref={wrapperRef}>
         <StatsWrapper>
-          <SensorStats />
+          <SensorStats info={info} />
         </StatsWrapper>
         <ChartWrapper>
           <Card id="card">
