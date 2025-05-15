@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Chart from 'react-apexcharts';
 import ReactApexChart from 'react-apexcharts';
 
@@ -6,7 +6,6 @@ export default function FailurePredictionChart({ chartWidth, chartHeight, states
   const timeCategories = ['10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00'];
 
   const paddedStates = [...states, ...Array(7 - states.length).fill(null)];
-  console.log(paddedStates);
   const chartSeries = [
     {
       name: '상태',
@@ -51,11 +50,15 @@ export default function FailurePredictionChart({ chartWidth, chartHeight, states
       custom: ({ dataPointIndex }) => {
         const time = timeCategories[dataPointIndex];
         const status =
-          states[dataPointIndex] === null ? '데이터 수신 중' : states[dataPointIndex] ? '고장' : '정상';
+          paddedStates[dataPointIndex] === null
+            ? '데이터 수신 중'
+            : paddedStates[dataPointIndex]
+            ? '고장'
+            : '정상';
         return `
           <div style="padding:8px;">
-            <strong>시간 </strong> ${time}<br/>
-            <strong>상태 </strong> ${status}
+            <strong>시간&nbsp;&nbsp;</strong> ${time}<br/>
+            <strong>상태&nbsp;&nbsp;</strong> ${status}
           </div>
         `;
       },
