@@ -22,12 +22,10 @@ import LastPageIcon from '@mui/icons-material/LastPage';
 
 export default function PaginatedTable({ infoList }) {
   const [page, setPage] = useState(0);
-  console.log('infoList', infoList);
+  // console.log('infoList', infoList);
 
   if (!infoList || infoList.length === 0)
     return <div style={{ fontFamily: 'Pretendard', margin: ' 0 0 16px 8px' }}>로딩 중...</div>;
-
-  // console.log('전달된 info', info);
 
   const currentInfo = infoList[page];
   const currentData = currentInfo.data || [];

@@ -1,13 +1,13 @@
 // TODO:
 // 1. 테이블 열 너비 조정 ✅
-// 2. 고장 진단 차트 - '데이터 수신 중'이 표시 안되고 정상으로 표시됨
-// 3. 위에 4개 실시간으로 정보 바뀌게
+// 2. 고장 진단 차트 - '데이터 수신 중'이 표시 안되고 정상으로 표시됨 ✅
+// 3. 위에 4개 실시간으로 정보 바뀌게 ✅
 // 4. 응답 5000씩 건너뛰기
 
 import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import NavBar from '../../Components/NavBar';
-import SensorStats from '../../Components/SensorStats';
+import DashboardTopStats from '../../Components/DashboardTopStats';
 import LifePredictionChart from '../../Charts/LifePredictionChart';
 import FailurePredictionChart from '../../Charts/FailurePredictionChart';
 import PaginatedTable from '../../Components/PagenatedTable';
@@ -89,7 +89,7 @@ export default function DashBoard() {
       <NavBar />
       <DashBoardWrapper ref={wrapperRef}>
         <StatsWrapper>
-          <SensorStats info={info} />
+          <DashboardTopStats info={info} />
         </StatsWrapper>
         <ChartWrapper>
           <Card id="card">
