@@ -1,102 +1,75 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Chart from 'react-apexcharts';
 import ReactApexChart from 'react-apexcharts';
 
-export default function FailurePredictionChart({ chartWidth, chartHeight }) {
-  const statusData = [
-    { time: '10:00', type: 'normal' },
-    { time: '10:30', type: 'normal' },
-    { time: '11:00', type: 'normal' },
-    { time: '11:30', type: 'failure' },
-    { time: '12:00', type: 'normal' },
+export default function FailurePredictionChart({ chartWidth, chartHeight, states, requestIdx }) {
+  const timeCategories = ['10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00'];
+
+  const paddedStates = [...states, ...Array(7 - states.length).fill(null)];
+  const chartSeries = [
+    {
+      name: '상태',
+      data: timeCategories.map((label, idx) => ({
+        x: label,
+        y: 1,
+        fillColor: paddedStates[idx] === null ? 'rgba(0,0,0,0)' : paddedStates[idx] ? '#F44336' : '#4CAF50',
+      })),
+    },
   ];
 
-  const [chartState] = useState({
-    series: [
-      {
-        name: '상태',
-        data: statusData.map((item) => ({
-          x: item.time,
-          y: 1,
-          fillColor: item.type === 'normal' ? '#4CAF50' : '#F44336',
-        })),
-      },
-    ],
-    options: {
-      chart: {
-        type: 'bar',
-        height: chartHeight,
-        toolbar: {
-          show: true, // 오른쪽 위 메뉴 표시
-          tools: {
-            download: true, // 다운로드 버튼 활성화
-          },
-        },
-      },
-      plotOptions: {
-        bar: {
-          columnWidth: '80%',
-          distributed: false,
-          dataLabels: {
-            position: 'top',
-          },
-        },
-      },
-      title: {
-        text: '연료 전지 고장 진단',
-        align: 'left',
-        style: {
-          fontSize: '16px',
-          color: '#333333',
-          fontWeight: 'bold',
-        },
-      },
-      xaxis: {
-        type: 'category',
-        categories: statusData.map((item) => item.time),
-        labels: {
-          style: {
-            fontSize: '12px',
-          },
-        },
-      },
-      yaxis: {
-        show: false,
-        max: 1,
-      },
-      dataLabels: {
-        enabled: true,
-        formatter: function (val) {
-          return '';
-        },
-        style: {
-          fontSize: '12px',
-          colors: ['#333'],
-        },
-      },
-      fill: {
-        opacity: 0.9, // 1이면 완전 불투명, 0.85가 기본값
-      },
-      tooltip: {
-        enabled: true,
-        custom: function ({ series, seriesIndex, dataPointIndex, w }) {
-          const item = statusData[dataPointIndex];
-          return `<div style="padding:8px;">
-            <strong>시간:</strong> ${item.time}<br/>
-            <strong>상태:</strong> ${item.type === 'normal' ? '정상' : '고장'}
-          </div>`;
-        },
-      },
-      legend: {
-        show: false,
+  const chartOptions = {
+    chart: {
+      type: 'bar',
+      height: chartHeight,
+      toolbar: { show: true },
+    },
+    plotOptions: {
+      bar: {
+        columnWidth: '80%',
+        distributed: false,
+        dataLabels: { position: 'top' },
       },
     },
-  });
+    title: {
+      text: '연료 전지 고장 진단',
+      align: 'left',
+      style: { fontSize: '16px', color: '#333333', fontWeight: 'bold' },
+    },
+    xaxis: {
+      categories: timeCategories,
+      labels: { style: { fontSize: '12px' } },
+    },
+    yaxis: { show: false, max: 1 },
+    dataLabels: {
+      enabled: true,
+      formatter: () => '',
+      style: { colors: ['#333'] },
+    },
+    tooltip: {
+      enabled: true,
+      custom: ({ dataPointIndex }) => {
+        const time = timeCategories[dataPointIndex];
+        const status =
+          paddedStates[dataPointIndex] === null
+            ? '데이터 수신 중'
+            : paddedStates[dataPointIndex]
+            ? '고장'
+            : '정상';
+        return `
+          <div style="padding:8px;">
+            <strong>시간&nbsp;&nbsp;</strong> ${time}<br/>
+            <strong>상태&nbsp;&nbsp;</strong> ${status}
+          </div>
+        `;
+      },
+    },
+    fill: { opacity: 0.9 },
+  };
 
   return (
     <ReactApexChart
-      options={chartState.options}
-      series={chartState.series}
+      options={chartOptions}
+      series={chartSeries}
       type="bar"
       width={chartWidth}
       height={chartHeight}

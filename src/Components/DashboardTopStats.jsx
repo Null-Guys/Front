@@ -2,26 +2,9 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { CheckCircle, AlertTriangle, BarChart, ChevronsUp } from 'lucide-react';
-import { fetchInfo } from '../API/fetchInfo';
 
-export default function DashboardTopStats() {
-  const [info, setInfo] = useState(null);
+export default function DashboardTopStats({ info }) {
   const isLoading = !info;
-
-  useEffect(() => {
-    const loadInfo = async () => {
-      try {
-        const data = await fetchInfo(0);
-        console.log(data); // 응답 데이터
-        setInfo(data); // 상태에 저장
-        console.log(info.SOH);
-      } catch (error) {
-        console.error('정보를 가져오는 데 실패했습니다:', error);
-      }
-    };
-
-    loadInfo();
-  }, []);
 
   return (
     <StatCardWrapper>
@@ -58,7 +41,6 @@ export default function DashboardTopStats() {
       />
       <StatCard
         title="교체 조건"
-        value="정상"
         value={isLoading ? '로딩 중...' : `${info.STT}`}
         subtitle="STT"
         valueColor={
