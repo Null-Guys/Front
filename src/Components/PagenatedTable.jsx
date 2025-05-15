@@ -37,57 +37,73 @@ export default function PaginatedTable({ infoList }) {
 
   return (
     <>
-      {infoList ? (
-        <Paper sx={{ width: '100%', overflow: 'auto' }}>
-          <TableContainer sx={{ maxHeight: 500 }}>
-            <Table stickyHeader>
-              <TableHead>
-                <TableRow>
-                  <TableCell>데이터</TableCell>
+      <Paper sx={{ width: '100%', overflow: 'auto', tableLayout: 'fixed' }}>
+        <TableContainer sx={{ maxHeight: 500 }}>
+          <Table stickyHeader sx={{ tableLayout: 'fixed' }}>
+            <TableHead>
+              <TableRow>
+                <TableCell
+                  className="cell"
+                  align="center"
+                  sx={{ width: 'fit-content', whiteSpace: 'nowrap' }}
+                >
+                  데이터
+                </TableCell>
+                {headers.map((key) => (
+                  <TableCell className="cell" key={key} align="center">
+                    {key}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {currentData.map((row, idx) => (
+                <TableRow key={idx}>
+                  <TableCell className="cell" align="center">
+                    데이터{page * 30 + idx + 1}
+                  </TableCell>
                   {headers.map((key) => (
-                    <TableCell key={key} align="right">
-                      {key}
+                    <TableCell className="cell" key={key} align="center">
+                      {row[key] != null ? row[key].toFixed?.(6) ?? row[key] : '...'}
                     </TableCell>
                   ))}
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {currentData.map((row, idx) => (
-                  <TableRow key={idx}>
-                    <TableCell>데이터{page * 30 + idx + 1}</TableCell>
-                    {headers.map((key) => (
-                      <TableCell key={key} align="right">
-                        {row[key] != null ? row[key].toFixed?.(6) ?? row[key] : '...'}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))}
-              </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TablePagination
-                    count={infoList.length}
-                    page={page}
-                    rowsPerPage={1}
-                    rowsPerPageOptions={[]}
-                    onPageChange={handleChangePage}
-                    ActionsComponent={(subProps) => (
-                      <CustomPagination {...subProps} totalPages={infoList.length} />
-                    )}
-                  />
-                </TableRow>
-              </TableFooter>
-            </Table>
-          </TableContainer>
-        </Paper>
-      ) : (
-        <div style={{ fontFamily: 'Pretendard', margin: ' 0 0 16px 8px' }}>로딩 중...</div>
-      )}
+              ))}
+            </TableBody>
+
+            {/* 페이지네이션 */}
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  count={infoList.length}
+                  page={page}
+                  rowsPerPage={1}
+                  rowsPerPageOptions={[]}
+                  onPageChange={handleChangePage}
+                  ActionsComponent={(subProps) => (
+                    <CustomPagination {...subProps} totalPages={infoList.length} />
+                  )}
+                />
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </TableContainer>
+      </Paper>
+
+      <style>
+        {`
+      .cell {
+        width: 132px;
+        padding: 16px 0;
+        box-sizing: border-box;
+      }
+    `}
+      </style>
     </>
   );
 }
-// TODO: 밑에 페이지 버튼 안눌림
-function CustomPagination({ count, page, onPageChange, totalPages }) {
+
+function CustomPagination({ page, onPageChange, totalPages }) {
   const theme = useTheme();
 
   return (
