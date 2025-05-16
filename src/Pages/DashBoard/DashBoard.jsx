@@ -16,7 +16,7 @@ export default function DashBoard() {
   const [infoList, setInfoList] = useState([]);
   const [voltages, setVoltages] = useState([]);
   const [states, setStates] = useState([]);
-  const [requestIdx, setRequestIdx] = useState(0); // 요청 순번: 0에서 시작, 1000씩 건너뛰기
+  const [requestIdx, setRequestIdx] = useState(0); // 요청 순번: 0에서 시작, 500씩 건너뛰기
   const [requestCnt, setRequestCnt] = useState(0); // 요청 한번 할 때마다 +1
 
   // 컴포넌트가 렌더링될 때 화면 크기 변화가 감지될 때 차트 너비를 업데이트
@@ -54,7 +54,6 @@ export default function DashBoard() {
         const data = await fetchInfo(requestIdx);
         setInfo(data);
         setInfoList((prev) => [...prev, data]); // 응답을 배열에 저장
-        // console.log(data);
         setVoltages((prev) => {
           const next = [...prev, data.utot[1]];
           return next.length > 7 ? next.slice(-7) : next;
@@ -66,15 +65,13 @@ export default function DashBoard() {
         });
 
         setRequestCnt((prev) => prev + 1); // 요청할 때마다 +1
-        if (requestCnt < 29) setRequestIdx((prev) => prev + 1000); // 데이터 1000개씩 건너뛰기
+        if (requestCnt < 29) setRequestIdx((prev) => prev + 500); // 데이터 500개씩 건너뛰기
       } catch (error) {
         console.error('정보를 가져오는 데 실패했습니다:', error);
       }
     };
 
-    if (requestCnt < 30) {
-      loadInfo();
-    }
+    if (requestCnt < 29) loadInfo(); // 요청 30번 보냄
   }, [requestIdx]);
 
   return (
