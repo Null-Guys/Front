@@ -16,6 +16,20 @@ export default function DashBoard() {
   const [infoList, setInfoList] = useState([]);
   const [voltages, setVoltages] = useState([]);
   const [states, setStates] = useState([]);
+
+  const [timeLabels, setTimeLabels] = useState(() => {
+    const labels = [];
+    const now = new Date();
+    now.setSeconds(0, 0);
+    for (let i = 0; i < 7; i++) {
+      const t = new Date(now.getTime() + i * 30 * 60000);
+      const hh = t.getHours().toString().padStart(2, '0');
+      const mm = t.getMinutes().toString().padStart(2, '0');
+      labels.push(`${hh}:${mm}`);
+    }
+    return labels;
+  });
+
   const [requestIdx, setRequestIdx] = useState(0); // 요청 순번: 0에서 시작, 500씩 건너뛰기
   const [requestCnt, setRequestCnt] = useState(0); // 요청 한번 할 때마다 +1
 
@@ -64,6 +78,25 @@ export default function DashBoard() {
           return next.length > 7 ? next.slice(-7) : next;
         });
 
+        setTimeLabels((prev) => {
+          if (states.length < 7) return prev;
+
+          // 마지막 시간 기준 +30분 추가
+          const last = prev[prev.length - 1];
+          const [lastH, lastM] = last.split(':').map(Number);
+          const lastDate = new Date();
+          lastDate.setHours(lastH);
+          lastDate.setMinutes(lastM);
+          lastDate.setSeconds(0, 0);
+          lastDate.setTime(lastDate.getTime() + 30 * 60000); // +30분
+
+          const hh = lastDate.getHours().toString().padStart(2, '0');
+          const mm = lastDate.getMinutes().toString().padStart(2, '0');
+          const newLabel = `${hh}:${mm}`;
+
+          return [...prev.slice(1), newLabel]; // 왼쪽 밀고 오른쪽 추가
+        });
+
         setRequestCnt((prev) => prev + 1); // 요청할 때마다 +1
         if (requestCnt < 29) setRequestIdx((prev) => prev + 500); // 데이터 500개씩 건너뛰기
       } catch (error) {
@@ -95,6 +128,7 @@ export default function DashBoard() {
               chartWidth={chartWidth}
               chartHeight={chartHeight}
               states={states}
+              timeLabels={timeLabels}
               requestIdx={requestIdx}
             />
           </Card>

@@ -2,14 +2,13 @@ import React from 'react';
 import Chart from 'react-apexcharts';
 import ReactApexChart from 'react-apexcharts';
 
-export default function FailurePredictionChart({ chartWidth, chartHeight, states, requestIdx }) {
-  const timeCategories = ['10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00'];
-
+export default function FailurePredictionChart({ chartWidth, chartHeight, states, timeLabels, requestIdx }) {
   const paddedStates = [...states, ...Array(7 - states.length).fill(null)];
+
   const chartSeries = [
     {
       name: '상태',
-      data: timeCategories.map((label, idx) => ({
+      data: timeLabels.map((label, idx) => ({
         x: label,
         y: 1,
         fillColor: paddedStates[idx] === null ? 'rgba(0,0,0,0)' : paddedStates[idx] ? '#F44336' : '#4CAF50',
@@ -20,6 +19,7 @@ export default function FailurePredictionChart({ chartWidth, chartHeight, states
   const chartOptions = {
     chart: {
       type: 'bar',
+      fontFamily: 'Pretendard, sans-serif',
       height: chartHeight,
       toolbar: { show: true },
     },
@@ -36,8 +36,8 @@ export default function FailurePredictionChart({ chartWidth, chartHeight, states
       style: { fontSize: '16px', color: '#333333', fontWeight: 'bold' },
     },
     xaxis: {
-      categories: timeCategories,
-      labels: { style: { fontSize: '12px' } },
+      categories: timeLabels,
+      labels: { style: { fontSize: '14px', color: '#333333' } },
     },
     yaxis: { show: false, max: 1 },
     dataLabels: {
@@ -48,7 +48,7 @@ export default function FailurePredictionChart({ chartWidth, chartHeight, states
     tooltip: {
       enabled: true,
       custom: ({ dataPointIndex }) => {
-        const time = timeCategories[dataPointIndex];
+        const time = timeLabels[dataPointIndex];
         const status =
           paddedStates[dataPointIndex] === null
             ? '데이터 수신 중'
