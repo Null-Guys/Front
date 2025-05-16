@@ -120,7 +120,7 @@ export default function DashBoard() {
               chartWidth={chartWidth}
               chartHeight={chartHeight}
               voltages={voltages}
-              requestIdx={requestIdx}
+              requestCnt={requestCnt}
             />
           </Card>
           <Card>
@@ -135,7 +135,6 @@ export default function DashBoard() {
         </ChartWrapper>
         <Card style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
           <div style={{ color: '#333333', fontWeight: 'bold', margin: ' 0 0 16px 8px' }}>상세 데이터</div>
-          {/* <TablePaginationActions info={info} style={{ margin: '0 -20px' }} /> */}
           <PaginatedTable infoList={infoList} style={{ margin: '0 -20px' }} />
         </Card>
       </DashBoardWrapper>

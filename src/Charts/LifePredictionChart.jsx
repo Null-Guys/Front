@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Chart from 'react-apexcharts';
 import ReactApexChart from 'react-apexcharts';
 
-export default function LifePredictionChart({ chartWidth, chartHeight, voltages, requestIdx }) {
+export default function LifePredictionChart({ chartWidth, voltages, requestCnt }) {
   const paddedVoltages = [...voltages, ...Array(7 - voltages.length).fill(null)];
-  const xCategories = Array.from({ length: paddedVoltages.length }, (_, i) => (i + 1) * 30);
+
+  const baseX = 30 * (requestCnt <= 7 ? 1 : requestCnt - 6); // 시작값
+  const xCategories = Array.from({ length: 7 }, (_, i) => baseX + i * 30); // 30분 간격 7개
 
   const chartOptions = {
     chart: {
