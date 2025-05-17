@@ -1,9 +1,3 @@
-// TODO:
-// 1. 테이블 열 너비 조정 ✅
-// 2. 고장 진단 차트 - '데이터 수신 중'이 표시 안되고 정상으로 표시됨 ✅
-// 3. 위에 4개 실시간으로 정보 바뀌게 ✅
-// 4. 응답 5000씩 건너뛰기
-
 import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import NavBar from '../../Components/NavBar';
@@ -22,7 +16,21 @@ export default function DashBoard() {
   const [infoList, setInfoList] = useState([]);
   const [voltages, setVoltages] = useState([]);
   const [states, setStates] = useState([]);
-  const [requestIdx, setRequestIdx] = useState(0); // 요청 순번: 0에서 시작, 1000씩 건너뛰기
+
+  const [timeLabels, setTimeLabels] = useState(() => {
+    const labels = [];
+    const now = new Date();
+    now.setSeconds(0, 0);
+    for (let i = 0; i < 7; i++) {
+      const t = new Date(now.getTime() + i * 30 * 60000);
+      const hh = t.getHours().toString().padStart(2, '0');
+      const mm = t.getMinutes().toString().padStart(2, '0');
+      labels.push(`${hh}:${mm}`);
+    }
+    return labels;
+  });
+
+  const [requestIdx, setRequestIdx] = useState(0); // 요청 순번: 0에서 시작, 500씩 건너뛰기
   const [requestCnt, setRequestCnt] = useState(0); // 요청 한번 할 때마다 +1
 
   // 컴포넌트가 렌더링될 때 화면 크기 변화가 감지될 때 차트 너비를 업데이트
@@ -60,7 +68,6 @@ export default function DashBoard() {
         const data = await fetchInfo(requestIdx);
         setInfo(data);
         setInfoList((prev) => [...prev, data]); // 응답을 배열에 저장
-        // console.log(data);
         setVoltages((prev) => {
           const next = [...prev, data.utot[1]];
           return next.length > 7 ? next.slice(-7) : next;
@@ -72,16 +79,32 @@ export default function DashBoard() {
         });
 
         setRequestCnt((prev) => prev + 1); // 요청할 때마다 +1
-        if (requestCnt < 29) setRequestIdx((prev) => prev + 1000); // 데이터 1000개씩 건너뛰기
+        if (requestCnt < 29) setRequestIdx((prev) => prev + 500); // 데이터 500개씩 건너뛰기
       } catch (error) {
         console.error('정보를 가져오는 데 실패했습니다:', error);
       }
     };
 
-    if (requestCnt < 30) {
-      loadInfo();
-    }
+    if (requestCnt < 29) loadInfo(); // 요청 30번 보냄
   }, [requestIdx]);
+
+  useEffect(() => {
+    if (infoList.length > timeLabels.length) {
+      const last = timeLabels[timeLabels.length - 1];
+      const [lastH, lastM] = last.split(':').map(Number);
+      const lastDate = new Date();
+      lastDate.setHours(lastH);
+      lastDate.setMinutes(lastM);
+      lastDate.setSeconds(0, 0);
+      lastDate.setTime(lastDate.getTime() + 30 * 60000);
+
+      const hh = lastDate.getHours().toString().padStart(2, '0');
+      const mm = lastDate.getMinutes().toString().padStart(2, '0');
+      const newLabel = `${hh}:${mm}`;
+
+      setTimeLabels((prev) => [...prev, newLabel]);
+    }
+  }, [infoList.length]);
 
   return (
     <Container>
@@ -96,7 +119,7 @@ export default function DashBoard() {
               chartWidth={chartWidth}
               chartHeight={chartHeight}
               voltages={voltages}
-              requestIdx={requestIdx}
+              requestCnt={requestCnt}
             />
           </Card>
           <Card>
@@ -104,14 +127,14 @@ export default function DashBoard() {
               chartWidth={chartWidth}
               chartHeight={chartHeight}
               states={states}
+              timeLabels={timeLabels}
               requestIdx={requestIdx}
             />
           </Card>
         </ChartWrapper>
         <Card style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
           <div style={{ color: '#333333', fontWeight: 'bold', margin: ' 0 0 16px 8px' }}>상세 데이터</div>
-          {/* <TablePaginationActions info={info} style={{ margin: '0 -20px' }} /> */}
-          <PaginatedTable infoList={infoList} style={{ margin: '0 -20px' }} />
+          <PaginatedTable infoList={infoList} timeLabels={timeLabels} style={{ margin: '0 -20px' }} />
         </Card>
       </DashBoardWrapper>
     </Container>

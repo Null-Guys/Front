@@ -1,9 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Test from './Test';
 import DashBoard from './Pages/DashBoard/DashBoard';
-import UploadFile from './Pages/UploadFile/UploadFile';
 
 const theme = createTheme({
   typography: {

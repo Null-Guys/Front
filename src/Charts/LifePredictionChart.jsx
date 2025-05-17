@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Chart from 'react-apexcharts';
 import ReactApexChart from 'react-apexcharts';
 
-// TODO: 최신 7개 데이터만 사용되는지 확인 필요 (x축은 아직 변경x)
-export default function LifePredictionChart({ chartWidth, chartHeight, voltages, requestIdx }) {
+export default function LifePredictionChart({ chartWidth, voltages, requestCnt }) {
   const paddedVoltages = [...voltages, ...Array(7 - voltages.length).fill(null)];
-  // console.log('paddedVoltages', paddedVoltages);
+
+  const baseX = 30 * (requestCnt <= 7 ? 1 : requestCnt - 6); // 시작값
+  const xCategories = Array.from({ length: 7 }, (_, i) => baseX + i * 30); // 30분 간격 7개
+
   const chartOptions = {
     chart: {
       type: 'line',
@@ -29,7 +31,7 @@ export default function LifePredictionChart({ chartWidth, chartHeight, voltages,
       row: { colors: ['#f3f3f3', 'transparent'], opacity: 0.5 },
     },
     xaxis: {
-      categories: [30, 60, 90, 120, 150, 180, 210],
+      categories: xCategories,
       labels: {
         formatter: (val) => `${val}분`,
         style: { fontSize: '14px', colors: '#333333' },
@@ -40,12 +42,12 @@ export default function LifePredictionChart({ chartWidth, chartHeight, voltages,
       },
     },
     yaxis: {
-      min: 3.32, // 최소값
+      min: 3.2, // 최소값
       max: 3.35, // 최대값
-      tickAmount: 20, // 눈금 개수
+      tickAmount: 6, // 눈금 개수
       labels: {
         formatter: function (val) {
-          return `${val}V`;
+          return `${val.toFixed(2)}V`;
         },
         style: {
           fontSize: '14px',
@@ -66,6 +68,13 @@ export default function LifePredictionChart({ chartWidth, chartHeight, voltages,
       strokeColors: '#fff', // 점 테두리 색상
       strokeWidth: 2, // 점 테두리 두께
       hover: { size: 7 }, // 마우스 오버 시 점 크기
+    },
+    tooltip: {
+      y: {
+        formatter: function (val) {
+          return val === null || val === undefined ? '데이터 수신 중' : `SOH: ${val.toFixed(6)}%`;
+        },
+      },
     },
   };
 

@@ -20,7 +20,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 
-export default function PaginatedTable({ infoList }) {
+export default function PaginatedTable({ infoList, timeLabels }) {
   const [page, setPage] = useState(0);
   // console.log('infoList', infoList);
 
@@ -30,6 +30,49 @@ export default function PaginatedTable({ infoList }) {
   const currentInfo = infoList[page];
   const currentData = currentInfo.data || [];
   const headers = Object.keys(currentData[0] || {});
+  const changedHeaders = [];
+
+  headers.forEach(function (key) {
+    switch (key) {
+      case 'DWAT (l/mn)_denoised':
+        changedHeaders.push('냉각수 유량 (l/mn)');
+        break;
+      case 'DoutAIR (l/mn)_denoised':
+        changedHeaders.push('공기 출구 유량 (l/mn)');
+        break;
+      case 'DoutH2 (l/mn)_denoised':
+        changedHeaders.push('수소 출구 유량 (l/mn)');
+        break;
+      case 'HrAIRFC (%)_denoised':
+        changedHeaders.push('상대 습도 (%)');
+        break;
+      case 'I (A)_denoised':
+        changedHeaders.push('전류 (A)');
+        break;
+      case 'J (A/cmｲ)_denoised':
+        changedHeaders.push('밀도 (A/cmｲ)');
+        break;
+      case 'PoutAIR (mbara)_denoised':
+        changedHeaders.push('공기 출구 압력 (mbara)');
+        break;
+      case 'TinH2 (ｰC)_denoised':
+        changedHeaders.push('수소 입구 온도 (ｰC)');
+        break;
+      case 'Utot_fluctuation':
+        changedHeaders.push('이상치 변화율');
+        break;
+      case 'Utot_trend':
+        changedHeaders.push('평균 열화율');
+        break;
+    }
+  });
+
+  // 시점 설명 문구
+  const startMin = page * 30;
+  const endMin = startMin + 30;
+
+  const faultTime = timeLabels[page] ?? '시점 정보 없음';
+  const description = `${startMin}~${endMin}분의 데이터, ${faultTime} 시점에서의 고장 상태를 나타냅니다.`;
 
   const handleChangePage = (event, newPage) => setPage(newPage);
 
@@ -43,12 +86,22 @@ export default function PaginatedTable({ infoList }) {
                 <TableCell
                   className="cell"
                   align="center"
-                  sx={{ width: 'fit-content', whiteSpace: 'nowrap' }}
+                  sx={{
+                    width: 'fit-content',
+                    whiteSpace: 'nowrap',
+                    fontSize: '15px',
+                    fontWeight: '600',
+                  }}
                 >
                   데이터
                 </TableCell>
-                {headers.map((key) => (
-                  <TableCell className="cell" key={key} align="center">
+                {changedHeaders.map((key) => (
+                  <TableCell
+                    className="cell"
+                    key={key}
+                    align="center"
+                    sx={{ fontSize: '15px', fontWeight: '600' }}
+                  >
                     {key}
                   </TableCell>
                 ))}
@@ -71,17 +124,29 @@ export default function PaginatedTable({ infoList }) {
 
             {/* 페이지네이션 */}
             <TableFooter>
-              <TableRow>
-                <TablePagination
-                  count={infoList.length}
-                  page={page}
-                  rowsPerPage={1}
-                  rowsPerPageOptions={[]}
-                  onPageChange={handleChangePage}
-                  ActionsComponent={(subProps) => (
-                    <CustomPagination {...subProps} totalPages={infoList.length} />
-                  )}
-                />
+              <TableRow sx={{ '&:last-child td': { borderBottom: 'none' } }}>
+                <TableCell colSpan={changedHeaders.length + 1} align="right" sx={{ padding: '0' }}>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'flex-end',
+                      alignItems: 'center',
+                      gap: 2,
+                    }}
+                  >
+                    <span style={{ fontSize: '14px', color: '#555' }}>{description}</span>
+                    <TablePagination
+                      count={infoList.length}
+                      page={page}
+                      rowsPerPage={1}
+                      rowsPerPageOptions={[]}
+                      onPageChange={handleChangePage}
+                      ActionsComponent={(subProps) => (
+                        <CustomPagination {...subProps} totalPages={infoList.length} />
+                      )}
+                    />
+                  </Box>
+                </TableCell>
               </TableRow>
             </TableFooter>
           </Table>
@@ -92,7 +157,7 @@ export default function PaginatedTable({ infoList }) {
         {`
       .cell {
         width: 132px;
-        padding: 16px 0;
+        padding: 16px 2;
         box-sizing: border-box;
       }
     `}
