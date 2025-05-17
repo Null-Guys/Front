@@ -78,25 +78,6 @@ export default function DashBoard() {
           return next.length > 7 ? next.slice(-7) : next;
         });
 
-        setTimeLabels((prev) => {
-          if (states.length < 7) return prev;
-
-          // 마지막 시간 기준 +30분 추가
-          const last = prev[prev.length - 1];
-          const [lastH, lastM] = last.split(':').map(Number);
-          const lastDate = new Date();
-          lastDate.setHours(lastH);
-          lastDate.setMinutes(lastM);
-          lastDate.setSeconds(0, 0);
-          lastDate.setTime(lastDate.getTime() + 30 * 60000); // +30분
-
-          const hh = lastDate.getHours().toString().padStart(2, '0');
-          const mm = lastDate.getMinutes().toString().padStart(2, '0');
-          const newLabel = `${hh}:${mm}`;
-
-          return [...prev.slice(1), newLabel]; // 왼쪽 밀고 오른쪽 추가
-        });
-
         setRequestCnt((prev) => prev + 1); // 요청할 때마다 +1
         if (requestCnt < 29) setRequestIdx((prev) => prev + 500); // 데이터 500개씩 건너뛰기
       } catch (error) {
@@ -106,6 +87,24 @@ export default function DashBoard() {
 
     if (requestCnt < 29) loadInfo(); // 요청 30번 보냄
   }, [requestIdx]);
+
+  useEffect(() => {
+    if (infoList.length > timeLabels.length) {
+      const last = timeLabels[timeLabels.length - 1];
+      const [lastH, lastM] = last.split(':').map(Number);
+      const lastDate = new Date();
+      lastDate.setHours(lastH);
+      lastDate.setMinutes(lastM);
+      lastDate.setSeconds(0, 0);
+      lastDate.setTime(lastDate.getTime() + 30 * 60000);
+
+      const hh = lastDate.getHours().toString().padStart(2, '0');
+      const mm = lastDate.getMinutes().toString().padStart(2, '0');
+      const newLabel = `${hh}:${mm}`;
+
+      setTimeLabels((prev) => [...prev, newLabel]);
+    }
+  }, [infoList.length]);
 
   return (
     <Container>
@@ -135,7 +134,7 @@ export default function DashBoard() {
         </ChartWrapper>
         <Card style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
           <div style={{ color: '#333333', fontWeight: 'bold', margin: ' 0 0 16px 8px' }}>상세 데이터</div>
-          <PaginatedTable infoList={infoList} style={{ margin: '0 -20px' }} />
+          <PaginatedTable infoList={infoList} timeLabels={timeLabels} style={{ margin: '0 -20px' }} />
         </Card>
       </DashBoardWrapper>
     </Container>
