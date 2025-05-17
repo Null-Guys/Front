@@ -35,34 +35,34 @@ export default function PaginatedTable({ infoList, timeLabels }) {
   headers.forEach(function (key) {
     switch (key) {
       case 'DWAT (l/mn)_denoised':
-        changedHeaders.push('dfd');
+        changedHeaders.push('냉각수 유량 (l/mn)');
         break;
       case 'DoutAIR (l/mn)_denoised':
-        changedHeaders.push('dsf');
+        changedHeaders.push('공기 출구 유량 (l/mn)');
         break;
       case 'DoutH2 (l/mn)_denoised':
-        changedHeaders.push('df');
+        changedHeaders.push('수소 출구 유량 (l/mn)');
         break;
       case 'HrAIRFC (%)_denoised':
-        changedHeaders.push('fd');
+        changedHeaders.push('상대 습도 (%)');
         break;
       case 'I (A)_denoised':
-        changedHeaders.push('fsdf');
+        changedHeaders.push('전류 (A)');
         break;
       case 'J (A/cmｲ)_denoised':
-        changedHeaders.push('qqz');
+        changedHeaders.push('밀도 (A/cmｲ)');
         break;
       case 'PoutAIR (mbara)_denoised':
-        changedHeaders.push('fzzd');
+        changedHeaders.push('공기 출구 압력 (mbara)');
         break;
       case 'TinH2 (ｰC)_denoised':
-        changedHeaders.push('ffgd');
+        changedHeaders.push('수소 입구 온도 (ｰC)');
         break;
       case 'Utot_fluctuation':
-        changedHeaders.push('fdt');
+        changedHeaders.push('이상치 변화율');
         break;
       case 'Utot_trend':
-        changedHeaders.push('fgbd');
+        changedHeaders.push('평균 열화율');
         break;
     }
   });
@@ -86,12 +86,22 @@ export default function PaginatedTable({ infoList, timeLabels }) {
                 <TableCell
                   className="cell"
                   align="center"
-                  sx={{ width: 'fit-content', whiteSpace: 'nowrap' }}
+                  sx={{
+                    width: 'fit-content',
+                    whiteSpace: 'nowrap',
+                    fontSize: '15px',
+                    fontWeight: '600',
+                  }}
                 >
                   데이터
                 </TableCell>
                 {changedHeaders.map((key) => (
-                  <TableCell className="cell" key={key} align="center">
+                  <TableCell
+                    className="cell"
+                    key={key}
+                    align="center"
+                    sx={{ fontSize: '15px', fontWeight: '600' }}
+                  >
                     {key}
                   </TableCell>
                 ))}
@@ -147,7 +157,7 @@ export default function PaginatedTable({ infoList, timeLabels }) {
         {`
       .cell {
         width: 132px;
-        padding: 16px 0;
+        padding: 16px 2;
         box-sizing: border-box;
       }
     `}
